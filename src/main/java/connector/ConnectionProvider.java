@@ -14,7 +14,7 @@ public class ConnectionProvider {
             Class.forName(DRIVER).newInstance();
             con = DriverManager.getConnection(CONNECTION_URL, USERNAME, PASSWORD);
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
-            System.out.println("BBBBBBB " + ex.getMessage());
+            System.out.println(ex.getMessage());
         } catch (SQLException ex) {
             System.out.println("SQLException: " + ex.getMessage());
             System.out.println("SQLState: " + ex.getSQLState());

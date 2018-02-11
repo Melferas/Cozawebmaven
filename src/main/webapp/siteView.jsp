@@ -23,6 +23,7 @@
         <script type="text/javascript" src="resources/scripts/controldynamic.js" ></script> 
     </head>
     <body>
+        <%@ include file="index.jsp" %>  
         <%            if (session.getAttribute("session") == null || session.getAttribute("session").equals("")) {
                 String redirectURL = "Login.jsp";
                 response.sendRedirect(redirectURL);
@@ -39,7 +40,7 @@
                 <h1 class="temptext">Control de temperatura</h1>
             </div>
             <div>
-                <p id="currentTemp" class="currentText"></p>
+                <p id="currentTemp" class="currentText" contenteditable></p>
             </div>
             <div class="buttoncontainer">
                 <button id="controlTempplus" class="controlButton">
@@ -61,7 +62,7 @@
                 <h1 class="lighttext"> Control de luz </h1>   
             </div>
             <div>
-                <p id="currentLight" class="currentText"></p>
+                <p id="currentLight" class="currentText" contenteditable></p>
             </div>
             <div class="buttoncontainer">
                 <button id="controlLuzplus" class="controlButton">
@@ -79,21 +80,27 @@
         <br/>        
         <div class="supercontainer">
             <div class="titulecontainer">
-                <h1 class="prestext"> Presencia </h1>   
-            </div>
-            <div>
-                <p id="currentPres" class="currentText"></p>
-            </div>
-            <div class="titulecontainer">
                 <h1 class="prestext"> Modo </h1>   
             </div>
             <div>
                 <p id="currentMode" class="currentText"></p>
             </div>
             <div class="buttoncontainer">
-                <button id="controlPresChange" class="controlButton">
+                <button id="controlPresChange" class="controlButton2">
                     Cambiar
                 </button>
+            </div>
+            <div class="titulecontainer">
+                <h1 class="prestext"> Tiempo </h1>   
+            </div>
+            <div>
+                <p id="currentTime" class="currentText" contenteditable></p>
+            </div>
+            <div class="titulecontainer">
+                <h1 class="prestext"> Presencia </h1>   
+            </div>
+            <div>
+                <p id="currentPres" class="currentText" ></p>
             </div>
         </div>
     </body>

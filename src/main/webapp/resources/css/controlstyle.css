@@ -8,11 +8,11 @@ html{
 }
 
 body{
-    background-image: url("../images/steel.png");
+    background-image: url("../images/congruent_pentagon.png");
 }
 
 .supercontainer{
-    background-color: #2C2C2C;
+    background-color: #A7E2D7;
     margin: auto;
     width: 50%;
     height: 33%;
@@ -32,12 +32,12 @@ body{
 .lighttext{
     color:red;
     -webkit-text-fill-color: white;
-    -webkit-text-stroke: 0.7px white;
+    -webkit-text-stroke: 0.7px black;
 }
 
 .prestext{
     color:red;
-    -webkit-text-fill-color: teal;
+    -webkit-text-fill-color: #7A9F99;
     -webkit-text-stroke: 0.7px black;
 
 }
@@ -62,8 +62,7 @@ body{
     border-color: grey;
     border-width: 3px;
     font-size: 13px;
-    background-color:graytext;
-    opacity:1;
+    background-color:#9de5bf;
 }
 
 .controlButton:hover {
@@ -73,5 +72,63 @@ body{
     border-color: grey;
     border-width: 3px;
     font-size: 13px;
-    background-color:lightgray;
+    background-color:#93ddb6;
+}
+
+.controlButton2{
+    height:100%;
+    width: 20%;
+    border-radius: 5px;
+    border-color: grey;
+    border-width: 3px;
+    font-size: 13px;
+    background-color:#9de5bf;
+}
+
+.controlButton2:hover {
+    height:100%;
+    width: 20%;
+    border-radius: 5px;
+    border-color: grey;
+    border-width: 3px;
+    font-size: 13px;
+    background-color:#93ddb6;
+}
+
+#Loginlink, #Logoutlink, #Prinlink,#RegisterLink{
+    text-decoration: none;
+    font-size:20px;
+    color: #8CB6AF;
+
+}
+
+#RegisterLink{
+    font-size:15px !important;
+}
+
+#linkpos{
+    float:right;
+}
+
+#Loginlink:hover, #Logoutlink:hover, #Prinlink:hover,#RegisterLink:hover{
+color:black;
+
+}
+
+.controlButton4{
+border-radius: 5px;
+    border-color: grey;
+    border-width: 3px;
+    font-size: 13px;
+    background-color:#9de5bf;
+    display:block;
+    display:inline-block;
+}
+
+.controlButton4:hover {
+    border-radius: 5px;
+    border-color: grey;
+    border-width: 3px;
+    font-size: 13px;
+    background-color:#93ddb6;
 }

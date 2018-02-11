@@ -2,7 +2,6 @@ package com.mycompany.cozawebmaven;
 
 import java.io.IOException;
 import static java.lang.Math.round;
-import java.text.DecimalFormat;
 import javax.enterprise.context.ApplicationScoped;
 import java.util.HashSet;
 import java.util.Set;
@@ -20,6 +19,7 @@ public class DeviceSessionHandler {
     private int temp = 30; // Temperatura
     private double lightLvl = 100.00; // Nivel de luz
     private boolean presence = true; // Presencia (False = no, True = si)
+    private long presencedelay = 0;
 
     private enum mode {
         on, off, pres;
@@ -100,6 +100,34 @@ public class DeviceSessionHandler {
         return res;
     }
 
+    /*
+        Get String State
+     */
+    public String getStringState() {
+
+        String res = "";
+
+        switch (state) {
+            case on:
+                res = "On";
+                break;
+
+            case off:
+                res = "Off";
+                break;
+
+            case pres:
+                res = "Presencia";
+                break;
+
+            default:
+                res = "";
+                break;
+        }
+
+        return res;
+    }
+
     public mode getEnumState() {
 
         return this.state;
@@ -168,9 +196,11 @@ public class DeviceSessionHandler {
 
                 this.setPresence(bool);
             }
-
-            if (report.getInt("mode") > -1) {
+            if (report.getInt("mode") > -1 && report.getInt("mode") < 3) {
                 this.setState(mode.values()[report.getInt("mode")]);
+            }
+            if (report.getInt("presenceDelay") > 0) {
+                this.setPresencedelay(report.getJsonNumber("presenceDelay").longValue());
             }
         }
 
@@ -184,8 +214,9 @@ public class DeviceSessionHandler {
                 .add("action", "show")
                 .add("temp", this.getTemp())
                 .add("light", this.getLightLvl())
-                .add("mode", this.getState())
-                .add("pres", this.isPresence())
+                .add("mode", this.getStringState())
+                .add("pres", this.isPresence() ? "True" : "False")
+                .add("prest", this.getPresencedelay())
                 .build();
         return addMessage;
     }
@@ -208,5 +239,19 @@ public class DeviceSessionHandler {
     @PostConstruct
     public void afterCreate() {
         System.out.println("Soup created");
+    }
+
+    /**
+     * @return the presencedelay
+     */
+    public long getPresencedelay() {
+        return presencedelay;
+    }
+
+    /**
+     * @param presencedelay the presencedelay to set
+     */
+    public void setPresencedelay(long presencedelay) {
+        this.presencedelay = presencedelay;
     }
 }

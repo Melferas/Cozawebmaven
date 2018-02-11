@@ -47,11 +47,23 @@ public class DeviceWebSocketServer {
         String topico = "$aws/things/Cozita1/shadow/update/accepted";
         AmazonRaspTopic atopac = new AmazonRaspTopic(topico, sessionHandler);
         client.subscribe(atopac);
+
+        String getshadow = "$aws/things/Cozita1/shadow/get";
+
+        String listenshadow = "$aws/things/Cozita1/shadow/get/accepted";
+        AmazonRaspTopic laston = new AmazonRaspTopic(listenshadow, sessionHandler);
+        client.subscribe(laston);
+
+        for (int i = 0; i < 10; i++) {
+            client.publish(getshadow, "");
+        }
+
     }
 
     @OnClose
-    public void close(Session session) {
+    public void close(Session session) throws AWSIotException {
         sessionHandler.removeSession(session);
+        client.disconnect();
     }
 
     @OnError
@@ -76,6 +88,11 @@ public class DeviceWebSocketServer {
                 String msn = "{\"state\":{\"desired\":{\"temperature\":" + sessionHandler.getTemp() + "}}}";
                 //  System.out.println(sessionHandler.getTemp());
                 client.publish(topic, msn);
+            } else if ("temptext".equals(jsonMessage.getString("action"))) {
+                sessionHandler.setTemp(jsonMessage.getInt("tempvalue"));
+                String msn = "{\"state\":{\"desired\":{\"temperature\":" + sessionHandler.getTemp() + "}}}";
+                //  System.out.println(sessionHandler.getTemp());
+                client.publish(topic, msn);
             } else if ("lightup".equals(jsonMessage.getString("action"))) {
                 sessionHandler.upLight();
                 String msn = "{\"state\":{\"desired\":{\"light\":" + sessionHandler.getLightLvl() + "}}}";
@@ -84,17 +101,23 @@ public class DeviceWebSocketServer {
                 sessionHandler.downLight();
                 String msn = "{\"state\":{\"desired\":{\"light\":" + sessionHandler.getLightLvl() + "}}}";
                 client.publish(topic, msn);
+            } else if ("lightext".equals(jsonMessage.getString("action"))) {
+                sessionHandler.setLightLvl((double) jsonMessage.getInt("lightvalue"));
+                String msn = "{\"state\":{\"desired\":{\"light\":" + sessionHandler.getLightLvl() + "}}}";
+                client.publish(topic, msn);
             } else if ("preschange".equals(jsonMessage.getString("action"))) {
                 sessionHandler.switchMode();
                 int presencia = sessionHandler.isPresence() ? 1 : 0;
                 String msn = "{\"state\":{\"desired\":{\"mode\":" + sessionHandler.getState() + ",\"presence\":" + presencia + "}}}";
+                client.publish(topic, msn);
+            } else if ("prestext".equals(jsonMessage.getString("action"))) {
+                sessionHandler.setPresencedelay(jsonMessage.getJsonNumber("prestime").longValue());
+                String msn = "{\"state\":{\"desired\":{\"presenceDelay\":" + sessionHandler.getPresencedelay() + "}}}";
                 client.publish(topic, msn);
             } else {
                 System.out.println("Fallo al coger el string");
             }
         }
     }
-
-
 
 }
